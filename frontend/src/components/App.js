@@ -4,17 +4,25 @@ import AppBar from "./Header";
 import NestedList from "./Listitems";
 import AddLeads from "./AddLeads";
 import { Container } from "@material-ui/core";
+import { HashRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 const App = () => {
   return (
     <>
       <AppBar />
       <Container>
-        <AddLeads />
+        <Route path="/addleads" exact>
+          <AddLeads />
+        </Route>
         <NestedList />
       </Container>
     </>
   );
 };
 
-ReactDOM.render(<App />, document.getElementById("app"));
+ReactDOM.render(
+  <Router>
+    <App />
+  </Router>,
+  document.getElementById("app")
+);
