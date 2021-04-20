@@ -5,6 +5,8 @@ import NestedList from "./Listitems";
 import AddLeads from "./AddLeads";
 import { Container } from "@material-ui/core";
 import { HashRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { Provider } from "react-redux";
+import { store } from "../store/store";
 
 const App = () => {
   return (
@@ -21,8 +23,10 @@ const App = () => {
 };
 
 ReactDOM.render(
-  <Router>
-    <App />
-  </Router>,
+  <Provider store={store}>
+    <Router>
+      <App />
+    </Router>
+  </Provider>,
   document.getElementById("app")
 );

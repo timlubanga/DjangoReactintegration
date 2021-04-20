@@ -5,7 +5,8 @@ import AccordionSummary from "@material-ui/core/AccordionSummary";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import axios from "axios";
+import { useDispatch, useSelector, connect } from "react-redux";
+import { getleads } from "../actions/actions";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -17,21 +18,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SimpleAccordion() {
-  const [items, setItems] = useState([]);
+function SimpleAccordion() {
+  const store = useSelector((state) => {
+    return state.lead.leads;
+  });
+  const dispatch = useDispatch();
   useEffect(() => {
-    axios
-      .get("http://localhost:8000/lead/api/lead/")
-      .then((response) => {
-        setItems(response.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
+    dispatch(getleads());
+  }, [dispatch]);
   const classes = useStyles();
   const displayData = () => {
-    return items.map((el) => {
+    return store.map((el) => {
       return (
         <Accordion key={el.id}>
           <AccordionSummary
@@ -48,5 +45,7 @@ export default function SimpleAccordion() {
       );
     });
   };
-  return <div className={classes.root}>{items.length && displayData()}</div>;
+  return <div className={classes.root}>{store.length && displayData()}</div>;
 }
+
+export default SimpleAccordion;
